@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./payment.css";
-import { Button, ButtonGroup } from "react-bootstrap";
-import { SendFill, ArrowReturnRight } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import { SendFill } from "react-bootstrap-icons";
 import { useSelector } from "react-redux";
 import Loader from "../loader/loader";
 
@@ -14,6 +12,7 @@ const Payment = (props) => {
   const [carddate, setCardDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [paymentmsg, setPaymentMsg] = useState("");
+  const [resevationmsg, setResevationMsg] = useState("");
   const [isLoder, setIsLoder] = useState(false);
 
   const startDate = props.startDate;
@@ -22,7 +21,6 @@ const Payment = (props) => {
   const duration = props.duration;
   const zimmerData = props.zimmerdata;
 
-  const navigate = useNavigate();
   const userData = useSelector((state) => state.AllReducers.userdata.userdata);
 
   const checkCreditCard = () => {
@@ -86,17 +84,15 @@ const Payment = (props) => {
         .then((data) => {
           if (data) {
             setIsLoder(false);
-            setPaymentMsg(data.message);
+            setResevationMsg(data.message);
+          }
+          if (data.status === true) {
             ClearInputs();
           }
         })
         .catch((error) => console.log(error));
     };
     fetching();
-  };
-
-  const BackToMainPage = () => {
-    navigate("/mainpage");
   };
 
   const ClearInputs = () => {
@@ -165,23 +161,18 @@ const Payment = (props) => {
             ></input>
           </div>
           <div className="button-group">
-            <ButtonGroup>
-              <button
-                onClick={checkCreditCard}
-                className="btn btn-outline-info"
-              >
-                <SendFill />
-                Send Order
-              </button>
-              <button onClick={BackToMainPage} className="btn btn-outline-info">
-                <ArrowReturnRight /> Back
-              </button>
-            </ButtonGroup>
+            <button onClick={checkCreditCard} className="btn btn-info">
+              <SendFill />
+              Send Order
+            </button>
           </div>
           <div className="pymnt-msg">
             <label>{paymentmsg}</label>
           </div>
         </div>
+      </div>
+      <div>
+        <label>{resevationmsg}</label>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.27b153ec.css",
-    "main.js": "/static/js/main.e8f4813e.js",
+    "main.css": "/static/css/main.bef7911f.css",
+    "main.js": "/static/js/main.b192ea86.js",
     "static/js/787.d127f5d1.chunk.js": "/static/js/787.d127f5d1.chunk.js",
     "static/media/443c20aa-luxury-indoor-swimming-pool.jpg": "/static/media/443c20aa-luxury-indoor-swimming-pool.559e46ce1899f8a78f10.jpg",
     "static/media/HPIM3254.JPG": "/static/media/HPIM3254.27cec8c04b39ea326407.JPG",
@@ -12,12 +12,12 @@
     "static/media/shree-balaji-lawns-and.jpg": "/static/media/shree-balaji-lawns-and.716a4d9fab728f21740a.jpg",
     "static/media/zexg24jzqn5evzrc0ylp14go6bq3_1590671208_78998036.webp": "/static/media/zexg24jzqn5evzrc0ylp14go6bq3_1590671208_78998036.3366d844e876513a11fe.webp",
     "index.html": "/index.html",
-    "main.27b153ec.css.map": "/static/css/main.27b153ec.css.map",
-    "main.e8f4813e.js.map": "/static/js/main.e8f4813e.js.map",
+    "main.bef7911f.css.map": "/static/css/main.bef7911f.css.map",
+    "main.b192ea86.js.map": "/static/js/main.b192ea86.js.map",
     "787.d127f5d1.chunk.js.map": "/static/js/787.d127f5d1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.27b153ec.css",
-    "static/js/main.e8f4813e.js"
+    "static/css/main.bef7911f.css",
+    "static/js/main.b192ea86.js"
   ]
 }

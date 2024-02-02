@@ -130,24 +130,51 @@ function AddZimmerResevation(req, res) {
     ClientId: zimmerResevation.zimmerUnitResevation.clientId,
     zimmerPrice: zimmerResevation.zimmerUnitResevation.zimmerPrice,
     duration: zimmerResevation.zimmerUnitResevation.duration,
+    amount: zimmerResevation.zimmerUnitResevation.amount,
     startDate: zimmerResevation.zimmerUnitResevation.startDate,
     endDate: zimmerResevation.zimmerUnitResevation.endDate,
   };
 
   orderResevation
-    .findOneAndUpdate(
-      { zimmerId },
-      { $push: { zimmerUnitResevation: newResevation } },
-      { new: true }
-    )
+    .findOne({ zimmerId })
     .then((result) => {
       if (result) {
-        console.log("client resevation saving succsessful");
-        res.json({
-          message: "client resevation saving succsessful",
-          staus: true,
-          resevationData: result,
+        const resevations = result.zimmerUnitResevation;
+        const isMatch = resevations.some((e) => {
+          return (
+            e.startDate <= newResevation.endDate &&
+            e.endDate >= newResevation.startDate
+          );
         });
+        if (isMatch) {
+          console.log("client reservation saving failed,choose another dates");
+          res.json({
+            message: "client reservation saving failed,choose another dates",
+            status: false,
+          });
+        } else {
+          orderResevation
+            .findOneAndUpdate(
+              { zimmerId },
+              { $push: { zimmerUnitResevation: newResevation } },
+              { new: true }
+            )
+            .then((Result) => {
+              console.log("client reservation saving successful");
+              res.json({
+                message: "client reservation saving successful",
+                status: true,
+                reservationData: Result,
+              });
+            })
+            .catch((err) => {
+              console.log("Error updating reservation:", err);
+              res.json({
+                message: "Error updating reservation",
+                status: false,
+              });
+            });
+        }
       } else {
         orderResevation
           .insertMany(zimmerResevation)
@@ -156,7 +183,7 @@ function AddZimmerResevation(req, res) {
               console.log("client resevation saving succsessful");
               res.json({
                 message: "client resevation saving succsessful",
-                staus: true,
+                status: true,
                 resevationData: result,
               });
             }
@@ -165,11 +192,10 @@ function AddZimmerResevation(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
-      console.log("client resevation saving failed");
+      console.log("Error updating reservation:", err);
       res.json({
-        message: `resevation failed`,
-        staus: false,
+        message: "Error updating reservation",
+        status: false,
       });
     });
 }
@@ -195,3 +221,6 @@ export default {
   DeleteZimmerResevation,
   ZimmerResevations,
 };
+
+// { $push: { zimmerUnitResevation: newResevation } },
+// { new: true }

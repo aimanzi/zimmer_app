@@ -22,6 +22,7 @@ const Reservation = () => {
   const [endDate, setendDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [dateGap, setDateGap] = useState(null);
+  const [msg, setMsg] = useState("");
 
   const location = useLocation();
   const zimmerData = location.state || null;
@@ -38,8 +39,14 @@ const Reservation = () => {
       const differenceInMilliseconds = endDateTime - startDateTime;
       const differenceInDays =
         differenceInMilliseconds / (1000 * 60 * 60 * 24) + 1;
-      setDateGap(differenceInDays);
-      setAmount(differenceInDays * zimmerData.price);
+      if (differenceInDays <= 0) {
+        setMsg("Error Resevation Start Date and End Date ");
+        setDateGap(false);
+      } else {
+        setDateGap(differenceInDays);
+        setAmount(differenceInDays * zimmerData.price);
+        setMsg("");
+      }
     } else {
       setDateGap(null);
     }
@@ -132,7 +139,10 @@ const Reservation = () => {
             />
           </label>
         </div>
-        {startDate && endDate ? (
+        <div>
+          <label>{msg}</label>
+        </div>
+        {dateGap ? (
           <div className="sendOrder-con">
             <Payment
               startDate={startDate}
